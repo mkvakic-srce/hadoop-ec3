@@ -1,0 +1,9 @@
+[submodule "ansible-hadoop"]
+	path = ansible-hadoop
+	url = https://github.com/andrewrothstein/ansible-hadoop
+[submodule "ansible-unarchive-deps"]
+	path = ansible-unarchive-deps
+	url = https://github.com/andrewrothstein/ansible-unarchive-deps
+[submodule "ansible-temurin"]
+	path = ansible-temurin
+	url = https://github.com/andrewrothstein/ansible-temurin

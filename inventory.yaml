@@ -1,0 +1,17 @@
+masters:
+  hosts:
+    master00:
+      ansible_host: 192.168.0.40
+
+slaves:
+  hosts:
+    slave00:
+      ansible_host: 192.168.0.122
+    slave01:
+      ansible_host: 192.168.0.241
+
+servers:
+  children:
+    masters:
+    slaves:
+
