@@ -6,7 +6,7 @@
 
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>pbsserver.localdomain</value>
+    <value>192.168.0.40</value>
   </property>
 
   <property>

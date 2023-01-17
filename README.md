@@ -10,4 +10,5 @@ Steps (ideally):
 3. As root:
   1. `hdfs namenode -format`
   2. `$HADOOP_HOME/sbin/start-dfs.sh`
+  2. `$HADOOP_HOME/sbin/start-yarn.sh`
 
