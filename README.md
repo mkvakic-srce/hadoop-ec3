@@ -1,32 +1,29 @@
 # hadoop-install
 
-Installs & sets up hadoop on an EC3 cluster.
+Installs & sets up hadoop on an EC3 cluster (Rocky Linux 8)
 
-## Setup (as root)
+## Install
 
-Deploy:
-1. `ansible-playbook hadoop-playbook.yaml -i inventory.yaml`
-1. `copy-config.sh`
-
-Start:
-1. `hdfs namenode -format`
-1. `$HADOOP_HOME/sbin/start-dfs.sh`
-1. `$HADOOP_HOME/sbin/start-yarn.sh`
-
-Stop:
-1. `$HADOOP_HOME/sbin/stop-all.sh`
+1. `hadoop-daemons.yaml` - Create hadoop daemons' users & group
+1. `hadoop-install.yaml` - Install hadoop cluster
 
 ## Actions
 
-### Root
+Note: `<user>` in brackets at command beginning
 
-Adding a user:
-1. `hdfs dfs -mkdir -p /user/rocky`
-1. `hdfs dfs -chown rocky:supergroup /user/rocky`
+### Start
+1. `[hdfs]$ $HADOOP_HOME/sbin/start-dfs.sh`
+1. `[yarn]$ $HADOOP_HOME/sbin/start-yarn.sh`
 
-### User
+### Stop
+1. `[hdfs]$ $HADOOP_HOME/sbin/stop-dfs.sh`
+1. `[yarn]$ $HADOOP_HOME/sbin/stop-yarn.sh`
 
-Upload books:
-1. `download-books.sh`
-1. `hdfs dfs -mkdir books`
-1. `hdfs dfs -put books/*.txt books`
+### First time
+1. `[hdfs]$ hdfs namenode -format`
+1. `[hdfs]$ hadoop fs -chmod -R 1777 /tmp`
+
+### Adding a user
+1. `[root]$ useradd <username>`
+1. `[hdfs]$ hadoop fs -mkdir -p /user/<username>`
+1. `[hdfs]$ hadoop fs -chown <username>:rocky /user/<username>`

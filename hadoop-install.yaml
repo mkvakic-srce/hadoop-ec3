@@ -1,0 +1,37 @@
+---
+- name: Create hadoop data & log dir
+  hosts: servers
+  become: true
+  become_user: root
+  tasks:
+
+    - name: Create data dirs
+      file:
+        path: "{{ hadoop_data_dir }}/{{ item }}"
+        state: directory
+        owner: hdfs
+        group: hadoop
+      loop:
+        - dataNode
+        - nameNode
+
+    - name: Create log dir
+      file:
+        path: "{{ hadoop_log_dir }}"
+        state: directory
+        owner: hdfs
+        group: hadoop
+        mode: '775'
+
+- name: Run ansible-hadoop playbook & copy etc/hadoop dir
+  hosts: servers
+  roles:
+    - ansible-hadoop
+  post_tasks:
+    - name: Copy etc/hadoop dir
+      become: true
+      become_user: root
+      copy:
+        src: etc/hadoop/
+        dest: "{{ hadoop_dir }}/etc/hadoop/"
+        directory_mode: yes
