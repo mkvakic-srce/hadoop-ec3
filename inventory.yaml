@@ -14,4 +14,11 @@ servers:
   children:
     masters:
     slaves:
+  vars:
+    hadoop_data_dir: /var/data/hadoop
+    hadoop_log_dir: /var/log/hadoop
+    hadoop_users:
+      - hdfs
+      - yarn
+      - mapred
 

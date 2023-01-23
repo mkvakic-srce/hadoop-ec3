@@ -1,0 +1,40 @@
+---
+- name: Create daemons' users
+  hosts: servers
+  become: true
+  become_user: root
+  tasks:
+
+    - name: Create group
+      group:
+        name: hadoop
+        state: present
+
+    - name: Create users
+      loop: "{{ hadoop_users }}"
+      user:
+        name: "{{ item }}"
+        shell: /bin/bash
+        group: hadoop
+        password: '!'
+
+    - name: Generate SSH keys on master00
+      when: inventory_hostname == 'master00'
+      loop: "{{ hadoop_users }}"
+      user:
+        name: "{{ item }}"
+        generate_ssh_key: true
+
+    - name: Rsync keys to machines
+      loop: "{{ hadoop_users }}"
+      synchronize:
+        src: "/home/{{ item }}/.ssh/id_rsa.pub"
+        dest: "/tmp/{{ item }}.key.pub"
+      delegate_to: master00
+
+    - name: Add to authorized keys
+      loop: "{{ hadoop_users }}"
+      authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', '/tmp/{{ item }}.key.pub') }}"
