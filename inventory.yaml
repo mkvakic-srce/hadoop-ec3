@@ -1,14 +1,14 @@
 masters:
   hosts:
     master00:
-      ansible_host: 192.168.0.40
+      ansible_host: pbsserver.localdomain
 
 slaves:
   hosts:
     slave00:
-      ansible_host: 192.168.0.122
+      ansible_host: wn1.localdomain
     slave01:
-      ansible_host: 192.168.0.241
+      ansible_host: wn2.localdomain
 
 servers:
   children:

@@ -1,0 +1,20 @@
+---
+- name: Update hadoop config on nodes
+  hosts: servers
+  tasks:
+
+    - name: Include vars from andsible-hadoop
+      loop:
+        - ansible-hadoop/defaults/main.yml
+        - ansible-hadoop/vars/main.yml
+      include_vars:
+        file: "{{ item }}"
+
+    - name: Copy etc/hadoop dir
+      become: true
+      become_user: root
+      copy:
+        src: etc/hadoop/
+        dest: "{{ hadoop_dir }}/etc/hadoop/"
+        directory_mode: yes
+        force: yes

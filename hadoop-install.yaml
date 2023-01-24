@@ -27,11 +27,3 @@
   hosts: servers
   roles:
     - ansible-hadoop
-  post_tasks:
-    - name: Copy etc/hadoop dir
-      become: true
-      become_user: root
-      copy:
-        src: etc/hadoop/
-        dest: "{{ hadoop_dir }}/etc/hadoop/"
-        directory_mode: yes
