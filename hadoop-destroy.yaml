@@ -1,0 +1,39 @@
+---
+
+- name: Destroy hadoop cluster
+  hosts: servers
+  become: true
+  become_user: root
+  tasks:
+
+    - name: Include vars from ansible-hadoop default
+      include_vars:
+        file: ansible-hadoop/defaults/main.yml
+
+    - name: Include vars from ansible-hadoop vars
+      include_vars:
+        file: ansible-hadoop/vars/main.yml
+
+    - name: Stop yarn services
+      ignore_errors: true
+      shell: ". /etc/profile; {{ hadoop_dir }}/sbin/stop-all.sh"
+    
+    - name: Remove directories
+      loop:
+        - "{{ hadoop_dir }}"
+        - "{{ hadoop_link_dir }}"
+        - "{{ hadoop_data_dir }}"
+        - "{{ hadoop_log_dir }}"
+      file:
+        state: absent
+        path: "{{ item }}"
+
+    - name: Remove /tmp files
+      loop:
+        - hdfs
+        - yarn
+        - mapred
+      command: "find /tmp -user {{ item }} -delete"
+
+
+      
