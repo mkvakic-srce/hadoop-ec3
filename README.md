@@ -12,6 +12,7 @@ Hadoop
 1. `hadoop-daemons.yaml` - Create hadoop daemons' users & group
 1. `hadoop-destroy.yaml` - Stop and remove Hadoop
 1. `hadoop-install.yaml` - Install hadoop cluster
+1. `etc/` - Hadoop config dir
 
 Knox
 1. `knox-install.yaml` - Create knox user and install
