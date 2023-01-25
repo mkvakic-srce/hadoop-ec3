@@ -1,0 +1,44 @@
+---
+
+- name: Create knox user
+  hosts: master00
+  become: true
+  become_user: root
+  tasks:
+
+    - name: Create group
+      group:
+        name: knox
+        state: present
+
+    - name: Create user
+      user:
+        name: knox
+        group: knox
+        shell: /bin/bash
+        password: '!'
+
+- name: Download Knox
+  hosts: master00
+  become: true
+  become_user: knox
+  tasks:
+
+    - name: Download
+      get_url:
+        url: https://downloads.apache.org/knox/1.6.0/knox-1.6.0.zip
+        dest: /home/knox/knox-1.6.0.zip
+        checksum: sha256:28fd877016190e5810478de6bf838deec97f0df6dd79f50dcbd4b8657b46f2c3
+        mode: 0644
+
+    - name: Unzip
+      unarchive:
+        src: /home/knox/knox-1.6.0.zip
+        dest: /home/knox/.
+        remote_src: true
+
+    - name: Add knox bin to .bash_profile
+      lineinfile:
+        path: ~/.bash_profile
+        regexp: '^export PATH'
+        line: 'export PATH=$PATH:~/knox-1.6.0/bin'
