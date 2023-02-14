@@ -1,0 +1,22 @@
+diff --git a/tasks/main.yml b/tasks/main.yml
+index 962f5e4..64163dc 100644
+--- a/tasks/main.yml
++++ b/tasks/main.yml
+@@ -1,8 +1,8 @@
+ ---
+ - include_role:
+-    name: andrewrothstein.unarchive-deps
++    name: ansible-unarchive-deps
+ - include_role:
+-    name: andrewrothstein.temurin
++    name: ansible-temurin
+   vars:
+     openjdk_app: jre
+ - name: checking for install in {{ hadoop_dir }}...
+diff --git a/templates/hadoop.sh.j2 b/templates/hadoop.sh.j2
+index c8ea19a..193fd53 100644
+--- a/templates/hadoop.sh.j2
++++ b/templates/hadoop.sh.j2
+@@ -1 +1,2 @@
++export HADOOP_HOME={{hadoop_parent_dir}}/hadoop
+ export PATH=$PATH:{{hadoop_parent_dir}}/hadoop/bin

@@ -2,7 +2,7 @@
 
 mkdir -p books
 nprocs=100
-ndocuments=$(( 10**4 ))
+ndocuments=$(( 10**3 ))
 (
   for idoc in $( seq 1 $ndocuments )
   do

@@ -1,0 +1,30 @@
+diff --git a/defaults/main/main.yml b/defaults/main/main.yml
+index c476a38..0e70a85 100644
+--- a/defaults/main/main.yml
++++ b/defaults/main/main.yml
+@@ -2,10 +2,10 @@
+ # defaults file for temurin
+ openjdk_app: jre
+ openjdk_ver:
+-  major: 19
++  major: 11
+   minor: 0
+-  patch: "2"
+-  b: "7"
++  patch: "18"
++  b: "10"
+ 
+ temurin_arch_map:
+   386: x32
+diff --git a/tasks/main.yml b/tasks/main.yml
+index 45a57ae..0127711 100644
+--- a/tasks/main.yml
++++ b/tasks/main.yml
+@@ -1,6 +1,6 @@
+ ---
+ - include_role:
+-    name: andrewrothstein.unarchive-deps
++    name: ansible-unarchive-deps
+ - name: resolve platform specific vars
+   include_vars: '{{ item }}'
+   with_first_found:

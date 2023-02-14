@@ -1,4 +1,5 @@
 ---
+
 - name: Create hadoop data & log dir
   hosts: servers
   become: true

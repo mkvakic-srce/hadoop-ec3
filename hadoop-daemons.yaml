@@ -1,4 +1,5 @@
 ---
+
 - name: Create daemons' users
   hosts: servers
   become: true
@@ -25,10 +26,20 @@
         name: "{{ item }}"
         generate_ssh_key: true
 
+    - name: Copy SSH key to tmp
+      when: inventory_hostname == 'master00'
+      loop: "{{ hadoop_users }}"
+      copy:
+        src: "/home/{{ item }}/.ssh/id_rsa.pub"
+        dest: "/tmp/{{ item }}.key.pub"
+        remote_src: true
+
     - name: Rsync keys to machines
       loop: "{{ hadoop_users }}"
+      become: true
+      become_user: rocky
       synchronize:
-        src: "/home/{{ item }}/.ssh/id_rsa.pub"
+        src: "/tmp/{{ item }}.key.pub"
         dest: "/tmp/{{ item }}.key.pub"
       delegate_to: master00
 
