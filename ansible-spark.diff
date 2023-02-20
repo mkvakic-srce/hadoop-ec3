@@ -1,0 +1,37 @@
+diff --git a/defaults/main.yml b/defaults/main.yml
+index 05d99a9..21ab171 100644
+--- a/defaults/main.yml
++++ b/defaults/main.yml
+@@ -1,6 +1,6 @@
+ ---
+ spark_ver: 3.3.1
+-spark_hadoop_ver: hadoop3
++spark_hadoop_ver: without-hadoop
+ spark_mirror_url: https://archive.apache.org/dist/spark
+ 
+ spark_parent_dir: /usr/local
+diff --git a/tasks/main.yml b/tasks/main.yml
+index 5f76826..4447e78 100644
+--- a/tasks/main.yml
++++ b/tasks/main.yml
+@@ -1,10 +1,6 @@
+ ---
+ - include_role:
+-    name: andrewrothstein.unarchive-deps
+-- include_role:
+-    name: andrewrothstein.temurin
+-  vars:
+-    openjdk_app: jdk
++    name: ansible-unarchive-deps
+ - name: check for spark installation
+   become: true
+   stat:
+diff --git a/templates/spark.sh.j2 b/templates/spark.sh.j2
+index 6f7945d..ad8c75b 100644
+--- a/templates/spark.sh.j2
++++ b/templates/spark.sh.j2
+@@ -1,3 +1,4 @@
++export SPARK_DIST_CLASSPATH=$( hadoop classpath )
+ export SPARK_HOME={{spark_parent_dir}}/spark
+ export PATH=$PATH:$SPARK_HOME/bin
+ {% if spark_envs is defined %}{% for key, value in spark_envs.iteritems() %}

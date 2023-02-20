@@ -7,3 +7,6 @@
 [submodule "ansible-temurin"]
 	path = ansible-temurin
 	url = https://github.com/andrewrothstein/ansible-temurin
+[submodule "ansible-spark"]
+	path = ansible-spark
+	url = https://github.com/andrewrothstein/ansible-spark

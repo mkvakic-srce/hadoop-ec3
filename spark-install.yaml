@@ -1,0 +1,6 @@
+---
+
+- name: Run ansible-spark playbook
+  hosts: servers
+  roles:
+    - ansible-spark

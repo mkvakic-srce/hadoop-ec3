@@ -14,9 +14,11 @@ index 962f5e4..64163dc 100644
      openjdk_app: jre
  - name: checking for install in {{ hadoop_dir }}...
 diff --git a/templates/hadoop.sh.j2 b/templates/hadoop.sh.j2
-index c8ea19a..193fd53 100644
+index c8ea19a..dff15c9 100644
 --- a/templates/hadoop.sh.j2
 +++ b/templates/hadoop.sh.j2
-@@ -1 +1,2 @@
+@@ -1 +1,3 @@
+-export PATH=$PATH:{{hadoop_parent_dir}}/hadoop/bin
 +export HADOOP_HOME={{hadoop_parent_dir}}/hadoop
- export PATH=$PATH:{{hadoop_parent_dir}}/hadoop/bin
++export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
++export PATH=$PATH:$HADOOP_HOME/bin
